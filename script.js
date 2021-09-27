@@ -1,73 +1,73 @@
-// Seleccionando elementos
+// Getting all the HTML elements
 
-const balanceFinal = document.querySelector('p');
-const montoIngreso = document.getElementById('ingreso_monto');
-const montoEgreso = document.getElementById('egreso_monto');
-const razonIngreso = document.getElementById('ingreso_tipo');
-const razonEgreso = document.getElementById('egreso_tipo');
-const botonIngreso = document.getElementById('ingreso_boton');
-const botonEgreso = document.getElementById('egreso_boton');
-const totalIngresos = document.getElementById('total_ingresos');
-const totalEgresos = document.getElementById('total_egresos');
-const listaMovimientos = document.getElementById('last_movements');
+const finalBalance = document.getElementById('balance');
+const incAmount = document.getElementById('incomeAmount');
+const expAmount = document.getElementById('expenseAmount');
+const incType = document.getElementById('incomeType');
+const expType = document.getElementById('expenseType');
+const incBtn = document.getElementById('incomeBtn');
+const expBtn = document.getElementById('expenseBtn');
+const incTotal = document.getElementById('incomeTotal');
+const expTotal = document.getElementById('expenseTotal');
+const lastMovements = document.getElementById('lastMovements');
 
 
 // Variables
 
-let LISTA_MOVIMIENTOS = [];
+let MOVEMENTS_LIST = [];
 let balance = 0;
-let ingresos = 0;
-let egresos = 0;
+let incomes = 0;
+let expenses = 0;
 
-// Eventos
+// Events
 
-botonIngreso.addEventListener('click', function() {
-    if (!montoIngreso.value || !razonIngreso.value) return;
-    let ingreso = {
-        propiedad: 'ingreso',
-        monto: parseFloat(montoIngreso.value),
-        razon: razonIngreso.value
+incBtn.addEventListener('click', function() {
+    if (!incAmount.value || !incType.value) return;
+    let income = {
+        property: 'income',
+        amount: parseFloat(incAmount.value),
+        type: incType.value
     }
-    LISTA_MOVIMIENTOS.push(ingreso)
-    actualizar();
-    limpiarInput([montoIngreso, razonIngreso]);
+    MOVEMENTS_LIST.push(income)
+    //refreshUI();
+    clearInputs([incAmount, incType]);
 });
 
-botonEgreso.addEventListener('click', function () {
-    if (!montoEgreso.value || !razonEgreso.value) return;
-    let egreso = {
-        propiedad: 'egreso',
-        monto: parseFloat(montoEgreso.value),
-        razon: razonEgreso.value
+expBtn.addEventListener('click', function () {
+    if (!expAmount.value || !expType.value) return;
+    let outcome = {
+        property: 'outcome',
+        amount: parseFloat(expAmount.value),
+        type: expType.value
     }
-    LISTA_MOVIMIENTOS.push(egreso)
-    actualizar();
-    limpiarInput([montoEgreso, razonEgreso]);
+    MOVEMENTS_LIST.push(outcome)
+    //refreshUI();
+    clearInputs([expAmount, expType]);
 });
 
-// Funciones
+// Functions
 
-const actualizar = () => {
-    ingresos = calcularTotal('ingresos', LISTA_MOVIMIENTOS);
-    egresos = calcularTotal('egresos', LISTA_MOVIMIENTOS);
-    balance = calcularBalance(ingresos, egresos);
+const refreshUI = () => {
+    incomes = calculateTotal('income', MOVEMENTS_LIST);
+    expenses = calculateTotal('outcome', MOVEMENTS_LIST);
+    balance = calculateBalance(incomes, expenses);
 }
 
-const calcularTotal = function(type, list) {
+const calculateTotal = function(property, list) {
     let sum = 0;
-    list.forEach(entrada => {
-        if(entrada.type = type) {
-            sum+=entrada.monto;
+    list.forEach(entry => {
+        if (entry.property = property) {
+            sum += entry.amount;
         }
     })
     return sum;
 }
 
-const calcularBalance = function(entrada,salida) {
-    return entrada-salida;
+const calculateBalance = function (inc, exp) {
+    return inc - exp;
 }
 
-const limpiarInput = (array) => {array.forEach(element => {
+const clearInputs = (array) => {array.forEach(element => {
     element.value = "";    
 });
 }
