@@ -29,7 +29,7 @@ incBtn.addEventListener('click', function() {
         type: incType.value
     }
     MOVEMENTS_LIST.push(income)
-    //refreshUI();
+    refreshUI();
     clearInputs([incAmount, incType]);
 });
 
@@ -41,7 +41,7 @@ expBtn.addEventListener('click', function () {
         type: expType.value
     }
     MOVEMENTS_LIST.push(outcome)
-    //refreshUI();
+    refreshUI();
     clearInputs([expAmount, expType]);
 });
 
@@ -56,7 +56,7 @@ const refreshUI = () => {
 const calculateTotal = function(property, list) {
     let sum = 0;
     list.forEach(entry => {
-        if (entry.property = property) {
+        if (entry.property == property) {
             sum += entry.amount;
         }
     })
