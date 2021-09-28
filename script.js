@@ -64,9 +64,9 @@ const refreshUI = () => {
     }
     })
 
-    finalBalance.innerHTML = `${$sign}${balance}`;
-    incTotal.innerHTML = `$${incomes}`;
-    expTotal.innerHTML = `$${expenses}`;
+    finalBalance.innerHTML = `${$sign}${formatter.format(balance)}`;
+    incTotal.innerHTML = `$${formatter.format(incomes)}`;
+    expTotal.innerHTML = `$${formatter.format(expenses)}`;
 }
 
 const calculateTotal = function(property, list) {
@@ -85,7 +85,7 @@ const clearInputs = (array) => {array.forEach(element => {element.value = ""})};
 
 const addML = function(list, property, amount, type, id) {
    const movement = `<li id="${id}" class="${property}">
-                        <p class="movement">${type}: ${amount}</p>
+                        <p class="movement">${(property=='Income') ? "Ingreso": "Gasto"} | ${type}: $${formatter.format(amount)}</p>
                         <img id="edit" />
                         <img id="delete" />
                     </li>`;
@@ -95,3 +95,9 @@ const addML = function(list, property, amount, type, id) {
     lastMovements.insertAdjacentHTML(position, movement);
 }
 
+// Added the "formatter" const, to have numbers with just 2 decimals
+
+const formatter = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+});
